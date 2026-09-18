@@ -1,15 +1,15 @@
 {
-  "_comment": "Слить ЭТО в ~/.claude/settings.json студента. Если файл уже есть — добавить ключи outputStyle и hooks, не снося существующие настройки. Поле _comment из итогового файла удалить.",
+  "_comment": "Слить ЭТО в ~/.claude/settings.json студента (на Windows это %USERPROFILE%\\.claude\\settings.json). Если файл уже есть — добавить ключи outputStyle и hooks, не снося существующие настройки. Поле _comment из итогового файла удалить. Вызов хуков через bash работает и на macOS, и на Windows (bash из Git for Windows).",
   "outputStyle": "student",
   "hooks": {
     "SessionStart": [
-      { "hooks": [ { "type": "command", "command": "bash $HOME/.claude/hooks/session_start.sh" } ] }
+      { "hooks": [ { "type": "command", "command": "bash \"$HOME/.claude/hooks/session_start.sh\"" } ] }
     ],
     "PreCompact": [
-      { "hooks": [ { "type": "command", "command": "bash $HOME/.claude/hooks/pre_compact.sh" } ] }
+      { "hooks": [ { "type": "command", "command": "bash \"$HOME/.claude/hooks/pre_compact.sh\"" } ] }
     ],
     "UserPromptSubmit": [
-      { "hooks": [ { "type": "command", "command": "bash $HOME/.claude/hooks/anti_fabrication_check.sh" } ] }
+      { "hooks": [ { "type": "command", "command": "bash \"$HOME/.claude/hooks/anti_fabrication_check.sh\"" } ] }
     ]
   }
 }
