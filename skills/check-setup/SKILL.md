@@ -83,7 +83,7 @@ macOS:
 | ОС — macOS | ✅/❌ | … |
 | git | ✅/❌ | версия / `xcode-select --install` |
 | Homebrew | ✅/❌ | версия / шаг 2 SETUP.md |
-| python3 | ✅/❌ | версия / `brew install python@3` |
+| python3 | ✅/❌ | версия (≥ 3.9 достаточно, системный /usr/bin/python3 тоже считается) / `brew install python@3` |
 | ffmpeg | ✅/❌ | версия / `brew install ffmpeg` |
 | whisper-cli | ✅/❌ | путь / `brew install whisper-cpp` |
 | модель whisper | ✅/❌ | размер файла / шаг 5 SETUP.md |
