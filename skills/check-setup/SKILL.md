@@ -38,6 +38,7 @@ ls -l ~/.claude/hooks/                    # 3 хука .sh, все исполн�
 ls ~/.claude/output-styles/student.md
 ls -d ~/.claude/skills/check-setup ~/.claude/skills/voice-notes
 gh auth status                            # вход в GitHub выполнен
+claude mcp list 2>/dev/null | grep -i figma   # Figma MCP подключён (шаг 11 SETUP.md)
 ```
 
 Проверка исполняемости хуков:
@@ -63,6 +64,7 @@ Get-ChildItem $env:USERPROFILE\.claude\hooks          # 3 файла .sh
 Get-ChildItem $env:USERPROFILE\.claude\output-styles  # student.md
 Get-ChildItem $env:USERPROFILE\.claude\skills         # check-setup, voice-notes
 gh auth status                            # вход в GitHub выполнен
+claude mcp list | Select-String -Pattern figma   # Figma MCP подключён (шаг 11 SETUP_WINDOWS.md)
 ```
 
 Проверка, что хук реально запускается через bash (должен вывести JSON с текстом
@@ -89,6 +91,7 @@ macOS:
 | модель whisper | ✅/❌ | размер файла / шаг 5 SETUP.md |
 | gh | ✅/❌ | версия / `brew install gh` |
 | gh-авторизация | ✅/❌ | аккаунт / `gh auth login` (шаг 10) |
+| Figma MCP | ✅/❌ | connected / шаг 11 SETUP.md |
 | Claude Code | ✅/❌ | версия / шаг 7 SETUP.md |
 | хуки (3 шт, +x) | ✅/❌ | список / шаг 8 SETUP.md |
 | output-style student | ✅/❌ | есть/нет / шаг 8 SETUP.md |
@@ -107,6 +110,7 @@ Windows:
 | faster-whisper | ✅/❌ | версия / `pip install faster-whisper` (шаг 5) |
 | gh | ✅/❌ | версия / `winget install GitHub.cli` (шаг 10) |
 | gh-авторизация | ✅/❌ | аккаунт / `gh auth login` (шаг 10) |
+| Figma MCP | ✅/❌ | connected / шаг 11 SETUP_WINDOWS.md |
 | Claude Code | ✅/❌ | версия / шаг 7 SETUP_WINDOWS.md |
 | хуки (3 шт) | ✅/❌ | список / шаг 8 SETUP_WINDOWS.md |
 | хук запускается через bash | ✅/❌ | JSON на выводе / шаг 8 SETUP_WINDOWS.md |

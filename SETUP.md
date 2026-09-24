@@ -280,7 +280,46 @@ gh auth login
 
 ---
 
-## 11. Финальный чек-лист (прогони в конце и покажи студенту)
+## 11. Figma — подключение MCP-сервера
+
+Частый вопрос: «Фигму подключаем через connectors или скиллом?» — **через
+connectors (MCP)**, отдельного скилла нет. Но сначала MCP-сервер надо включить
+в самой Figma.
+
+Требования:
+
+- **Десктопное приложение Figma** (не браузер) — MCP-сервер живёт только в нём.
+- Аккаунт Figma с **Dev или Full seat** на платном тарифе
+  (Professional/Organization/Enterprise). На бесплатном тарифе сервера нет.
+
+Шаг 1 — ⚠️ **делает студент вручную** в десктопной Figma:
+
+1. Открыть любой файл в десктопном приложении Figma.
+2. Переключиться на вкладку **Dev** (Dev Mode).
+3. Включить **MCP server** (Enable Dev Mode MCP Server).
+
+Шаг 2 — подключи connector в Claude Code (делаешь ты):
+
+```bash
+claude mcp add --transport http figma http://127.0.0.1:3845/mcp
+```
+
+Проверка:
+
+```bash
+claude mcp list
+```
+
+В списке должен быть `figma` со статусом подключения. Внутри сессии Claude Code
+то же самое показывает команда `/mcp`.
+
+⚠️ Подвох: сервер работает, только пока открыто десктопное приложение Figma с
+включённым MCP. Если `figma` не подключается — сначала проверь, что Figma
+запущена и в ней открыт файл с включённым сервером во вкладке Dev.
+
+---
+
+## 12. Финальный чек-лист (прогони в конце и покажи студенту)
 
 ```bash
 echo "== версии =="
@@ -305,6 +344,9 @@ python3 -c "import json;d=json.load(open('$HOME/.claude/settings.json'));print('
 
 echo "== github =="
 gh auth status
+
+echo "== figma MCP =="
+claude mcp list 2>/dev/null | grep -i figma || echo "figma: НЕТ (шаг 11)"
 ```
 
 В новой сессии Claude: убедись, что виден инжект «🛑 ANTI-FABRICATION CHECK»
