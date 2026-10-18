@@ -1,4 +1,9 @@
-# Настройка окружения студента на Windows — инструкция для Claude Code
+# Настройка окружения студента на Windows — инструкция для Claude Code и Codex
+
+> **Если ты — Codex** (а не Claude Code): шаги 0–6, 9 и 10 выполняй как есть
+> (в шаге 9 факты о студенте пиши в `docs\USER.md` проекта, а не в `memory/`,
+> и копируй `AGENTS.md` вместо `CLAUDE.md`). **Вместо шагов 7, 8 и 11 выполни
+> раздел 13 «Codex»**, а в финальном чек-листе — его проверки.
 
 > Это инструкция **для Claude Code**. Студент дал тебе папку `ff-starter-kit/`
 > и сказал «настрой меня по SETUP_WINDOWS.md». Выполняй по шагам, после каждого
@@ -41,6 +46,19 @@ Get-Command git, bash, winget, python, ffmpeg, gh, claude -ErrorAction SilentlyC
 
 `Get-Command` выведет найденные команды; чего нет в списке — того нет в системе,
 ставим в шагах ниже. Не пропускай проверки «на глаз».
+
+Проверь VPN (Claude и Codex из России не работают, а смена IP — риск блокировки
+аккаунта):
+
+```powershell
+curl.exe -s ipinfo.io
+```
+
+- `"country"` должна быть **не `RU`**. Если `RU` — остановись и отправь студента
+  к `VPN.md` (там два способа и проверка). Без VPN дальнейшие шаги с входом
+  в аккаунты бессмысленны.
+- Покажи студенту `"ip"` и попроси запомнить: при следующих проверках адрес
+  должен быть тем же самым.
 
 ---
 
@@ -440,3 +458,91 @@ del whisper_test.wav
 
 Если что-то не сошлось — не говори «всё работает». Покажи студенту, что именно
 не поднялось, и предложи обратиться к боту поддержки курса.
+
+---
+
+## 13. Codex (только если ты — Codex, а не Claude Code)
+
+Codex — ИИ-агент от OpenAI. Он работает в **приложении ChatGPT для компьютера**
+(режим Codex) и в терминале (Codex CLI). Приложение и CLI делят одну настройку
+`%USERPROFILE%\.codex\config.toml` и одни и те же скиллы, поэтому окружение
+одинаковое. Нужна подписка ChatGPT (Plus или выше) — оформляет студент сам.
+
+### 13.1. Приложение и вход — ⚠️ делает студент
+
+Приложение студент скачивает сам: https://chatgpt.com/download → вход в свой
+аккаунт ChatGPT → режим **Codex** → открыть папку `ff-starter-kit`. Раз ты это
+читаешь — этот шаг уже сделан.
+
+CLI (по желанию студента, для работы в терминале), в новом окне PowerShell:
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"
+```
+
+Переоткрой PowerShell, первый запуск `codex` → **Sign in with ChatGPT** —
+входит студент лично.
+
+### 13.2. Скиллы
+
+Codex читает скиллы из `%USERPROFILE%\.agents\skills\` (формат `SKILL.md` тот
+же, что у Claude Code):
+
+```powershell
+$KIT = "$env:USERPROFILE\Projects\ff-starter-kit"   # поправь, если папка лежит в другом месте
+
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.agents\skills" | Out-Null
+Copy-Item -Recurse -Force "$KIT\skills\check-setup" "$env:USERPROFILE\.agents\skills\"
+Copy-Item -Recurse -Force "$KIT\skills\voice-notes" "$env:USERPROFILE\.agents\skills\"
+Get-ChildItem "$env:USERPROFILE\.agents\skills"
+```
+
+Хуков, как у Claude Code (напоминания про анти-фабрикацию и память), в этой
+настройке нет — правила работы целиком лежат в `AGENTS.md`, честно скажи об
+этом студенту.
+
+### 13.3. Правила и память проекта
+
+В шаге 9 вместо `CLAUDE.md` скопируй в рабочую папку студента `AGENTS.md`,
+а ответы студента о себе запиши в `docs\USER.md`:
+
+```powershell
+Copy-Item "$KIT\AGENTS.md" "$env:USERPROFILE\Projects\my-project\"
+```
+
+### 13.4. Figma (MCP)
+
+Сначала ⚠️ студент вручную включает MCP-сервер в десктопной Figma — так же,
+как в шаге 11 (Dev Mode → Enable desktop MCP server; нужен платный тариф
+с Dev/Full seat).
+
+Затем добавь сервер в общую настройку Codex — допиши в
+`%USERPROFILE%\.codex\config.toml` (создай файл, если его нет; существующие
+настройки не трогай):
+
+```toml
+[mcp_servers.figma]
+url = "http://127.0.0.1:3845/mcp"
+```
+
+То же самое можно сделать командой CLI `codex mcp add figma --url http://127.0.0.1:3845/mcp`
+или в приложении: Settings → MCP servers → Add server → Streamable HTTP.
+После изменения настройки приложение нужно перезапустить (Restart).
+
+Проверка (если стоит CLI):
+
+```powershell
+codex mcp list
+```
+
+### 13.5. Чек-лист Codex
+
+```powershell
+curl.exe -s ipinfo.io | Select-String country          # не RU
+Get-ChildItem "$env:USERPROFILE\.agents\skills"           # check-setup, voice-notes
+Select-String -Path "$env:USERPROFILE\.codex\config.toml" -Pattern "mcp_servers.figma" -Context 0,1
+Test-Path "$env:USERPROFILE\Projects\my-project\AGENTS.md"
+codex --version   # если CLI не ставили — ошибка «не найдено» нормальна
+```
+
+Плюс версии из шага 12 (git, winget, python, ffmpeg, faster-whisper, gh).
