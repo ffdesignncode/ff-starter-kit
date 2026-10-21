@@ -26,8 +26,8 @@
 0. **Настрой VPN** — Claude и Codex из России не работают. Как выбрать VPN
    с постоянным IP и настроить его — в файле `VPN.md`.
 1. **Заведи аккаунт и оплати подписку** — Claude Pro (для Claude Code) или
-   ChatGPT Plus (для Codex). Как зарегистрироваться из России, подтвердить
-   телефон и оплатить — в файле `SUBSCRIPTION.md`.
+   ChatGPT Plus (для Codex). Как зарегистрироваться в ChatGPT из России,
+   подтвердить телефон и оплатить — в файле `SUBSCRIPTION.md`.
 2. **Получи эту папку** `ff-starter-kit/` (скачай архивом или склонируй репозиторий)
    и положи её в удобное место, например `~/Projects/ff-starter-kit`
    (на Windows: `C:\Users\<ты>\Projects\ff-starter-kit`).
@@ -70,7 +70,7 @@
 | `SETUP.md` | Claude Code | пошаговая настройка окружения (macOS) |
 | `SETUP_WINDOWS.md` | Claude Code | пошаговая настройка окружения (Windows) |
 | `VPN.md` | тебе и ИИ | как выбрать и настроить VPN с постоянным IP |
-| `SUBSCRIPTION.md` | тебе | аккаунт и подписка Claude / ChatGPT из России |
+| `SUBSCRIPTION.md` | тебе | аккаунт и подписка ChatGPT (Codex) из России |
 | `vpn/hysteria2-install-prompt.md` | ИИ-агент | задание для ИИ: поставить свой VPN-сервер |
 | `CLAUDE.md` | Claude Code | правила работы — скопируется в твой будущий проект |
 | `AGENTS.md` | Codex | те же правила работы для Codex |
